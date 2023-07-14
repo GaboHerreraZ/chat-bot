@@ -70,8 +70,12 @@ const getList = ({
   };
 };
 
-//? TODO: Pendiente por hacer ADRIAN -> Retorna objeto de imagen
-const getMediaImage = () => {};
+//? TODO: Pendiente por hacer ADRIAN -> Retorna objeto de imagen ¡Esto no se esta usando!
+const getMediaImage = (url) => {
+return {
+  url
+}
+};
 
 //? TODO: Pendiente por hacer ADRIAN -> Retorna objeto para mostrar video
 const getMediaVideo = () => {};

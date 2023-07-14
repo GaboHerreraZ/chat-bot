@@ -1,3 +1,4 @@
+const { text } = require("body-parser");
 const {
   getTextWithButtons,
   getList,
@@ -43,6 +44,21 @@ class Core {
     };
 
     return this.#provider.sendMessageMeta(body);
+  }
+
+  async sendImage(url) {
+    const body = {
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      to: this.#number,
+      type: "image", 
+      image: {
+        link : url
+      }
+    }
+
+    return this.#provider.sendMessageMeta(body)
+    // await this.#provider.sendMedia(this.#number,'que es?',url)
   }
 }
 
