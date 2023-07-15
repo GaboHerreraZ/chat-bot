@@ -4,18 +4,19 @@ const {
   getButton,
   getRowsSection,
   getSectionList,
-  getMediaImage
 } = require("../utils/getElements");
+const UserService = require("../service/user.service");
 
 const buttonsFlowTest = addKeyword("Botones").addAction(
-  async (ctx, { provider }) => {
+  async (ctx, { provider, ...rest }) => {
+    console.log("rest", rest);
     const core = new Core(ctx, provider);
     const buttons = [
       getButton("Botón 1"),
       getButton("Botón 2"),
       getButton("Botón 3"),
     ];
-    
+
     await core.sendButtons("Header Titulo", "Body Titulo", buttons);
   }
 );
@@ -75,26 +76,26 @@ const locationFlowTest = addKeyword("Ubicación").addAction(
   }
 );
 
-const imagenFlowTest = addKeyword('Imagen').addAction(
-  async (ctx, {provider}) => {
+const imagenFlowTest = addKeyword("Imagen").addAction(
+  async (ctx, { provider }) => {
     const core = new Core(ctx, provider);
 
-    const url = 'https://scontent-bog1-1.xx.fbcdn.net/v/t39.30808-6/228239063_2874901096092476_2965143385145891036_n.png?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=sACEWg5OnLkAX_LJSFU&_nc_ht=scontent-bog1-1.xx&oh=00_AfBOp545tFMlBSNLgvOA2_FIyqY07zSq1wsJhNPtexVZfg&oe=64B5E94E'
+    const url =
+      "https://scontent-bog1-1.xx.fbcdn.net/v/t39.30808-6/228239063_2874901096092476_2965143385145891036_n.png?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=sACEWg5OnLkAX_LJSFU&_nc_ht=scontent-bog1-1.xx&oh=00_AfBOp545tFMlBSNLgvOA2_FIyqY07zSq1wsJhNPtexVZfg&oe=64B5E94E";
 
-    await core.sendImage(url)
-
+    await core.sendImage(url);
   }
-)
+);
 
-const imageWithText = addKeyword('imgTxt').addAction(
-  async (ctx, {provider}) => {
+const imageWithText = addKeyword("imgTxt").addAction(
+  async (ctx, { provider }) => {
     const core = new Core(ctx, provider);
-    const url = 'https://scontent-bog1-1.xx.fbcdn.net/v/t39.30808-6/228239063_2874901096092476_2965143385145891036_n.png?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=sACEWg5OnLkAX_LJSFU&_nc_ht=scontent-bog1-1.xx&oh=00_AfBOp545tFMlBSNLgvOA2_FIyqY07zSq1wsJhNPtexVZfg&oe=64B5E94E'
+    const url =
+      "https://scontent-bog1-1.xx.fbcdn.net/v/t39.30808-6/228239063_2874901096092476_2965143385145891036_n.png?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=sACEWg5OnLkAX_LJSFU&_nc_ht=scontent-bog1-1.xx&oh=00_AfBOp545tFMlBSNLgvOA2_FIyqY07zSq1wsJhNPtexVZfg&oe=64B5E94E";
 
-    await core.interactiveList(url)
-
+    await core.interactiveList(url);
   }
-)
+);
 
 const mainFlowTest = addKeyword(EVENTS.WELCOME).addAnswer(
   [
@@ -104,14 +105,63 @@ const mainFlowTest = addKeyword(EVENTS.WELCOME).addAnswer(
     "⚛ *Lista Interactiva*",
     "🛄 *Ubicación*",
     "🖼️ *Imagen*",
-    "🎟️ *imgTxt*"
+    "🎟️ *imgTxt*",
   ],
   {
     capture: true,
   },
   null,
-  [buttonsFlowTest, interactiveListFlowTest, locationFlowTest, imagenFlowTest,imageWithText]
+  [
+    buttonsFlowTest,
+    interactiveListFlowTest,
+    locationFlowTest,
+    imagenFlowTest,
+    imageWithText,
+  ]
 );
+
+let name;
+let email;
+let mobile;
+
+const userInfoFlowTest = (database) => {
+  return addKeyword(EVENTS.WELCOME)
+    .addAnswer(
+      [
+        "Buenas tardes,",
+        "Nos gustaría tener algunos datos sobre tí para guardarlos en nuestro sistema",
+        "¿Como es tu nombre?",
+      ],
+      {
+        capture: true,
+      },
+      async (ctx, { flowDynamic }) => {
+        name = ctx.body;
+        mobile = ctx.from;
+
+        await flowDynamic(`Excelente ${name}, para terminar...`);
+      },
+      null
+    )
+    .addAnswer(
+      "¿Cual es tu correo?",
+      { capture: true },
+      async (ctx, { provider }) => {
+        email = ctx.body;
+        const userInfo = {
+          name,
+          mobile,
+          email,
+          date: new Date(),
+        };
+
+        database.runInTransaction(async (session) => {
+          const userService = new UserService();
+          await userService.insertUser();
+        });
+      }
+    );
+};
 
 module.exports = {
   mainFlowTest,

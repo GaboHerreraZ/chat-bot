@@ -70,16 +70,6 @@ const getList = ({
   };
 };
 
-//? TODO: Pendiente por hacer ADRIAN -> Retorna objeto de imagen ¡Esto no se esta usando!
-const getMediaImage = (url) => {
-return {
-  url
-}
-};
-
-//? TODO: Pendiente por hacer ADRIAN -> Retorna objeto para mostrar video
-const getMediaVideo = () => {};
-
 const getLocation = ({ longitude, latitude, name, address }) => {
   return {
     type: "location",
@@ -92,26 +82,29 @@ const getLocation = ({ longitude, latitude, name, address }) => {
   };
 };
 
+//? TODO: Pendiente por hacer ADRIAN -> Retorna objeto para mostrar video
+const getMediaVideo = () => {};
+
 //? TODO: Pendiente por hacer ADRIAN -> Retorna un objeto de tipo product
 const getProduct = () => {
-  return { 
+  return {
     recipient_type: "individual",
-    to : "{{Recipient-WA-ID}}",
+    to: "{{Recipient-WA-ID}}",
     type: "interactive",
     interactive: {
       type: "product",
       body: {
-        text: "body text"
+        text: "body text",
       },
       footer: {
-        text: "footer text"
+        text: "footer text",
       },
       action: {
         catalog_id: "catalog-ID",
-        product_retailer_id: "product-ID"
-      }
-    }
-  }
+        product_retailer_id: "product-ID",
+      },
+    },
+  };
 };
 
 //? TODO: Pendiente por hacer ADRIAN -> Retorna un objeto de tipo lista product
@@ -123,7 +116,6 @@ module.exports = {
   getList,
   getSectionList,
   getRowsSection,
-  getMediaImage,
   getMediaVideo,
   getLocation,
   getProduct,

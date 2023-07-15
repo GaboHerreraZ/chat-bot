@@ -1,13 +1,19 @@
-require('dotenv').config()
+require("dotenv").config();
 const { createBot, createProvider, createFlow } = require("@bot-whatsapp/bot");
-
 const MetaProvider = require("@bot-whatsapp/provider/meta");
 const MockAdapter = require("@bot-whatsapp/database/mock");
 
-const { mainFlowTest } = require("./src/flowTest/flow-test");
+const { mainFlowTest } = require("./flowTest/flow-test");
+const ChatDatabase = require("./database/chat-database");
 
 const main = async () => {
-  const adapterDB = new MockAdapter(); //TODO Cambiar a MongoDb
+  //adpter fake
+  const adapterDB = new MockAdapter();
+
+  // chat bot database
+  const chatBotDatabase = new ChatDatabase();
+  chatBotDatabase.connectToChatDatabase();
+
   const adapterFlow = createFlow([mainFlowTest]);
 
   const adapterProvider = createProvider(MetaProvider, {

@@ -1,4 +1,3 @@
-const { text } = require("body-parser");
 const {
   getTextWithButtons,
   getList,
@@ -51,15 +50,14 @@ class Core {
       messaging_product: "whatsapp",
       recipient_type: "individual",
       to: this.#number,
-      type: "image", 
+      type: "image",
       image: {
-        link : url
-      }
-    }
+        link: url,
+      },
+    };
 
-    return this.#provider.sendMessageMeta(body)
+    return this.#provider.sendMessageMeta(body);
   }
-
 }
 
 module.exports = Core;
