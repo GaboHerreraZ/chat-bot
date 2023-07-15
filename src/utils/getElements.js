@@ -93,7 +93,26 @@ const getLocation = ({ longitude, latitude, name, address }) => {
 };
 
 //? TODO: Pendiente por hacer ADRIAN -> Retorna un objeto de tipo product
-const getProduct = () => {};
+const getProduct = () => {
+  return { 
+    recipient_type: "individual",
+    to : "{{Recipient-WA-ID}}",
+    type: "interactive",
+    interactive: {
+      type: "product",
+      body: {
+        text: "body text"
+      },
+      footer: {
+        text: "footer text"
+      },
+      action: {
+        catalog_id: "catalog-ID",
+        product_retailer_id: "product-ID"
+      }
+    }
+  }
+};
 
 //? TODO: Pendiente por hacer ADRIAN -> Retorna un objeto de tipo lista product
 const getProductList = () => {};

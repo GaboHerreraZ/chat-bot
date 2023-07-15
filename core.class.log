@@ -1,7 +1,14 @@
-[handleMsg]:  { type: 'text', from: '573108582340', to: '15550597865', body: 'asd' }
+[handleMsg]:  { type: 'text', from: '573108582340', to: '15550597865', body: 'H' }
 [handleMsg]:  {
   type: 'text',
   from: '573108582340',
   to: '15550597865',
-  body: 'imagen'
+  body: 'ImgTxt'
+}
+[handleMsg]:  { type: 'text', from: '573108582340', to: '15550597865', body: 'G' }
+[handleMsg]:  {
+  type: 'text',
+  from: '573108582340',
+  to: '15550597865',
+  body: 'Imagen'
 }

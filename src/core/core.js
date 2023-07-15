@@ -58,8 +58,8 @@ class Core {
     }
 
     return this.#provider.sendMessageMeta(body)
-    // await this.#provider.sendMedia(this.#number,'que es?',url)
   }
+
 }
 
 module.exports = Core;

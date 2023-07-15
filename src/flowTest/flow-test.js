@@ -86,6 +86,16 @@ const imagenFlowTest = addKeyword('Imagen').addAction(
   }
 )
 
+const imageWithText = addKeyword('imgTxt').addAction(
+  async (ctx, {provider}) => {
+    const core = new Core(ctx, provider);
+    const url = 'https://scontent-bog1-1.xx.fbcdn.net/v/t39.30808-6/228239063_2874901096092476_2965143385145891036_n.png?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=sACEWg5OnLkAX_LJSFU&_nc_ht=scontent-bog1-1.xx&oh=00_AfBOp545tFMlBSNLgvOA2_FIyqY07zSq1wsJhNPtexVZfg&oe=64B5E94E'
+
+    await core.interactiveList(url)
+
+  }
+)
+
 const mainFlowTest = addKeyword(EVENTS.WELCOME).addAnswer(
   [
     "Hola,",
@@ -93,13 +103,14 @@ const mainFlowTest = addKeyword(EVENTS.WELCOME).addAnswer(
     "⏩ *Botones*",
     "⚛ *Lista Interactiva*",
     "🛄 *Ubicación*",
-    "🖼️ *Imagen*"
+    "🖼️ *Imagen*",
+    "🎟️ *imgTxt*"
   ],
   {
     capture: true,
   },
   null,
-  [buttonsFlowTest, interactiveListFlowTest, locationFlowTest, imagenFlowTest]
+  [buttonsFlowTest, interactiveListFlowTest, locationFlowTest, imagenFlowTest,imageWithText]
 );
 
 module.exports = {
