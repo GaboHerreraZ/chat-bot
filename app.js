@@ -3,7 +3,7 @@ const { createBot, createProvider, createFlow } = require("@bot-whatsapp/bot");
 const MetaProvider = require("@bot-whatsapp/provider/meta");
 const MockAdapter = require("@bot-whatsapp/database/mock");
 
-const { mainFlowTest } = require("./flowTest/flow-test");
+const { mainFlowTest, userInfoFlowTest } = require("./flowTest/flow-test");
 const ChatDatabase = require("./database/chat-database");
 
 const main = async () => {
@@ -14,7 +14,7 @@ const main = async () => {
   const chatBotDatabase = new ChatDatabase();
   chatBotDatabase.connectToChatDatabase();
 
-  const adapterFlow = createFlow([mainFlowTest]);
+  const adapterFlow = createFlow([userInfoFlowTest(chatBotDatabase)]);
 
   const adapterProvider = createProvider(MetaProvider, {
     jwtToken: process.env.JWTOKEN,

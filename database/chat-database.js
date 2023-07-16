@@ -18,7 +18,7 @@ class ChatDatabase {
     session.startTransaction();
 
     try {
-      await fn(session);
+      await fn();
       await session.commitTransaction();
     } catch (error) {
       console.error("Error al ejecutar la transaccion", error);

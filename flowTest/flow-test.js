@@ -140,8 +140,7 @@ const userInfoFlowTest = (database) => {
         mobile = ctx.from;
 
         await flowDynamic(`Excelente ${name}, para terminar...`);
-      },
-      null
+      }
     )
     .addAnswer(
       "¿Cual es tu correo?",
@@ -165,4 +164,5 @@ const userInfoFlowTest = (database) => {
 
 module.exports = {
   mainFlowTest,
+  userInfoFlowTest,
 };
