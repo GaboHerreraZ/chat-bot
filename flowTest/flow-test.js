@@ -138,6 +138,7 @@ const userInfoFlowTest = (database) => {
       async (ctx, { flowDynamic }) => {
         name = ctx.body;
         mobile = ctx.from;
+        console.log("amigo", ctx);
 
         await flowDynamic(`Excelente ${name}, para terminar...`);
       }
@@ -154,9 +155,9 @@ const userInfoFlowTest = (database) => {
           date: new Date(),
         };
 
-        database.runInTransaction(async (session) => {
+        await database.runInTransaction(async () => {
           const userService = new UserService();
-          await userService.insertUser();
+          await userService.insertUser(userInfo);
         });
       }
     );

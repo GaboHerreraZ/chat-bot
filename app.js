@@ -5,16 +5,22 @@ const MockAdapter = require("@bot-whatsapp/database/mock");
 
 const { mainFlowTest, userInfoFlowTest } = require("./flowTest/flow-test");
 const ChatDatabase = require("./database/chat-database");
+const {
+  welcomeFlow,
+  informationFlow,
+  locationFlow,
+} = require("./flows/helados-el-rey.flow");
 
 const main = async () => {
   //adpter fake
   const adapterDB = new MockAdapter();
 
   // chat bot database
-  const chatBotDatabase = new ChatDatabase();
-  chatBotDatabase.connectToChatDatabase();
+  //const chatBotDatabase = new ChatDatabase();
+  //chatBotDatabase.connectToChatDatabase();
+  const adapterFlow = createFlow([welcomeFlow, informationFlow, locationFlow]);
 
-  const adapterFlow = createFlow([userInfoFlowTest(chatBotDatabase)]);
+  //const adapterFlow = createFlow([mainFlowTest]);
 
   const adapterProvider = createProvider(MetaProvider, {
     jwtToken: process.env.JWTOKEN,

@@ -30,9 +30,12 @@ class Core {
     return this.#provider.sendMessageMeta(body);
   }
 
-  async sendList(listContainer) {
+  async sendList(listContainer, time = 200) {
     const list = getList(listContainer);
-    return this.#provider.sendLists(this.#number, list);
+
+    setTimeout(() => {
+      this.#provider.sendLists(this.#number, list);
+    }, time);
   }
 
   async sendLocation(location) {
